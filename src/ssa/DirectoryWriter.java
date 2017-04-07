@@ -11,62 +11,51 @@ public class DirectoryWriter {
 	static String filepath,parentDirectory;
 	static File randomDir,randomFile;
 	private String drive = "";
-	private String SECTION_PATH;
-	private String PROJECT_PATH;
+	private String section;
+	private String project;
+	private String projectPath;
+	
+	public DirectoryWriter(String section, String project){
+		this.section = section;
+		this.project = project;
+	}
 	
 	public String getDrive(){
 		return drive;
 	}
+	
 	public String getProjectPath(){
-		return PROJECT_PATH;
+		return projectPath;
 	}
-	public void openFile() {
+	
+	public void writeDirectoryStructure() {
 		try{				
-				x = new Scanner(new File("directories.txt"));				
-			}
-			catch(Exception e){
-				System.out.println("Could not find file");
-			}		
-		}		
-	
-	public void closeFile(){
-		x.close();
-	}
-	
-	
-	public DirectoryWriter(String section, String project) {
-		openFile();
-		//Stores the drive letter where the directory structure
-		//will be created
-		drive = x.next();
-		SECTION_PATH = drive + "\\" + section;
-		PROJECT_PATH = SECTION_PATH + "\\" + project;
-		randomDir = new File(SECTION_PATH);
+			x = new Scanner(new File("directories.txt"));				
+		}
+		catch(Exception e){
+			System.out.println("Could not find file");
+		}	
+			
+		/*Stores the drive letter where the directory structure
+		  will be created.*/	
+		this.drive = x.next();
+		this.projectPath = drive + "\\" + section+ "\\" + project;
+		
+		randomDir = new File(drive + "\\" + section);
 		randomDir.mkdir();
 		
-		randomDir= new File(PROJECT_PATH);
-		//System.out.println(randomDir.exists());
+		randomDir = new File(drive + "\\" + section+ "\\" + project);
 			if(!randomDir.exists()){
 				randomDir.mkdir();			
-				while (x.hasNext()){
-					//String a = x.next();								
-					//makeDirectory(projectPath + a);	
-					randomDir = new File(PROJECT_PATH + x.next());
+				while (x.hasNext()){	
+					randomDir = new File(drive + "\\" + section + 
+							                     "\\" + project + x.next());
 					randomDir.mkdir();
 				}
 			}else{
 				JOptionPane.showMessageDialog(null, 
 				"The project (" + project + ") already exists.");
 			}	
-			
-			closeFile();
+			x.close();
 		}			
-		/*
-		public void makeDirectory(String fullPath) {
-			//System.out.println(fullPath);
-			randomDir = new File(fullPath);
-			randomDir.mkdir();
-		}
-		*/
-
 }

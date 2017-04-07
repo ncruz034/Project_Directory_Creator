@@ -7,31 +7,20 @@ import java.util.Scanner;
 public class Municipalities {
 	
 	private static Scanner x;
-	private static ArrayList<String> municipalitiesList = new ArrayList<String>();
-	
+		
 	public ArrayList<String> getMunicipalities(){
-		openFile();
-		return municipalitiesList;
-	}
-	
-	private void openFile() {
 		try{				
-				x = new Scanner(new File("municipalities.txt"));
-			}
+			 x = new Scanner(new File("municipalities.txt"));
+		}
 			catch(Exception e){
-				//System.out.println("Could not find Municipalities file");
-			}	
-		readFile();
-		closeFile();
-	}
-	
-	private static void closeFile(){
-		x.close();
-	}
-	
-	private static void readFile() {
+		}
+		
+	    ArrayList<String> municipalitiesList = new ArrayList<String>();
+
 		while (x.hasNext()){
 			municipalitiesList.add(x.next());
 		}	
-	}	
+		x.close();
+		return municipalitiesList;
+	}
 }

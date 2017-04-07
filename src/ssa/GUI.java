@@ -24,9 +24,10 @@ public class GUI {
 
 
 	public void initialize() {
+		
 		Municipalities m = new Municipalities();
-		ArrayList<String> municipalities;
-		municipalities = m.getMunicipalities();
+		ArrayList<String> municipalities = m.getMunicipalities();
+		
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 400, 208);
@@ -66,14 +67,17 @@ public class GUI {
 		
 		String[] items = new String[municipalities.size()];
 		
-		//for (int i=0; i<=municipalities.size()-1; i++){
-		//	items[i]=municipalities.get(i);
-		//}
-		
+		/*
+		 * Transfer the ArrayList to an array to be used by
+		 * the JComboBox
+		 */
 		for (String mu: municipalities){
 			items[municipalities.indexOf(mu)]= mu;
 		}
-		
+		/*
+		 * Initialize the JComboBox with the list of 
+		 * Municipalities.
+		 */
 		comboBox = new JComboBox<String>(items);
 		comboBox.setBounds(218, 113, 120, 16);
 		frame.getContentPane().add(comboBox);
@@ -86,6 +90,7 @@ public class GUI {
 				ic.imputChecker(textField.getText(), textField_1.getText(),(String) comboBox.getSelectedItem());			
 			}
 		});
+		
 		btnEnter.setBounds(40, 141, 67, 23);
 		frame.getContentPane().add(btnEnter);
 		

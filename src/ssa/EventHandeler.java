@@ -9,45 +9,40 @@ public class EventHandeler {
 	
 	public void btnEnter_Clicked(String section, String project, String municipality){
 		
-		//CreateDirectories of = new CreateDirectories();
 		DirectoryWriter dw = new DirectoryWriter(section,project);
-		//of.openFile();
-		//of.readFile(section, project);
-		//of.closeFile();
-		
-		//String path = of.getDrive() + "\\" + section + "\\" + project;					
-		//String path = dw.getDrive() + "\\" + section + "\\" + project;
-		//String PROJECT_PATH = dw.getProjectPath();
+		dw.writeDirectoryStructure();
 		Shortcut sc = new Shortcut(dw.getProjectPath());
 		sc.createDesktopShortcut(project);
 		
-		String shortcutPath = JShellLink.getDirectory("desktop") + "\\"   + project +  ".lnk";
-		String projectShortcutPath = "S:\\projects\\" + project + ".lnk";
-		String municipalityShortcutPath ="S:\\projects\\" + municipality;
+		//String municipalityShortcutPath = "S:\\projects\\" + municipality;
+		File desktop =new File(JShellLink.getDirectory("desktop") + "\\" + project + ".lnk");
 		
-	
-		File afile =new File(shortcutPath);
-	    File bfile =new File(projectShortcutPath);
-	    File cfile =new File(municipalityShortcutPath + "\\" + project + ".lnk");
-		
-		
+	    File sProjectsFile =new File("S:\\projects\\" + project + ".lnk");
+	    
+	    File sProjectsMunicipalitiesFile =new File("S:\\projects\\" + municipality + 
+	    											           "\\" + project + ".lnk");
+				
 		MoveShortcut msc = new MoveShortcut(); 
+		
 		try {
 			//Copy shortcut from desktop to s:/projects
-			msc.copyFile(afile, bfile); 
+			msc.copyFile(desktop, sProjectsFile); 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
+		
 		if(municipality.compareTo("Unknown") != 0){
 			try {
 				//Copy shortcut from desktop to s:/projects/municipality
-				msc.copyFileToMunicipality(afile, cfile,municipalityShortcutPath);  
+				msc.copyFileToMunicipality(desktop, 
+					   sProjectsMunicipalitiesFile,
+				   "S:\\projects\\" + municipality);  
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		try {
-			msc.deleteFile(afile);
+			msc.deleteFile(desktop);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -56,5 +51,4 @@ public class EventHandeler {
 	public void btnExit_Clicked(){
 		System.out.println("Clicked");
 	}
-
 }
