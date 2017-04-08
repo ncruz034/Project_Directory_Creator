@@ -31,52 +31,28 @@ public class Shortcut {
 		}
 	}
 	 
-    public  void copyFile(File sourceFile, File destFile) throws IOException {
+   // @SuppressWarnings("resource")
+	private  void copyFile(File sourceFile, File destFile) throws IOException {
         if(!destFile.exists()) {
             destFile.createNewFile();
         }
 
         FileChannel source = null;
-        FileChannel destination = null;
-
+        FileChannel destination= null;
+    
         try {
             source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
+           destination = new FileOutputStream(destFile).getChannel();      
+            destination.transferFrom(source, 0, source.size());         
         }
         finally {
+        	
             if(source != null) {
                 source.close();
             }
             if(destination != null) {
                 destination.close();
-            }
-        }
-    }
-	
-    public  void copyFileToMunicipality(File sourceFile, File destFile,String newShortcutMunicipalityPath) throws IOException {
-    	randomDir=new File(newShortcutMunicipalityPath);
-		randomDir.mkdir();
- 	
-    	if(!destFile.exists()) {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        }
-        finally {
-            if(source != null) {
-                source.close();
-            }
-            if(destination != null) {
-                destination.close();
-            }
+            }    
         }
     }
 
@@ -98,9 +74,10 @@ public class Shortcut {
 		if(municipality.compareTo("Unknown") != 0){
 			try {
 				//Copy shortcut from desktop to s:/projects/municipality
-				copyFileToMunicipality(desktop,
-					   sProjectsMunicipalitiesFile,
-				   "S:\\projects\\" + municipality);  
+				randomDir=new File("S:\\projects\\" + municipality);
+				randomDir.mkdir();
+				copyFile(desktop,
+					   sProjectsMunicipalitiesFile);  
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -112,7 +89,7 @@ public class Shortcut {
 		}  		
     }
     
-	public  void deleteFile(File sourceFile) throws IOException {	
+	private  void deleteFile(File sourceFile) throws IOException {	
 		sourceFile.delete();	
 	}  
 }
