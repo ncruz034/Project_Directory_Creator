@@ -41,9 +41,11 @@ public class DirectoryWriter {
 		/*Stores the drive letter where the directory structure
 		  will be created.*/	
 		this.drive = x.next();
-		this.projectPath = drive + "\\" + section+ "\\" + project;
+		
+		this.projectPath = drive + "\\" + section + "\\" + project;
 		
 		randomDir = new File(drive + "\\" + section);
+		
 		randomDir.mkdir();
 		
 		randomDir = new File(drive + "\\" + section+ "\\" + project);

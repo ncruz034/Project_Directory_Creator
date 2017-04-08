@@ -24,9 +24,9 @@ public class GUI {
 	private JTextField textField_1;
 	private JComboBox<String> comboBox;
 
-	public void initialize() {
+	public void initialize(Municipalities m) {
 		
-		Municipalities m = new Municipalities();
+		//Municipalities m = new Municipalities();
 		ArrayList<String> municipalities = m.getMunicipalities();
 		
 		frame = new JFrame();
@@ -107,7 +107,7 @@ public class GUI {
 		
 	}
 	
-	public void imputChecker(String section, String project, String municipality){
+	private void imputChecker(String section, String project, String municipality){
 		
 		if(section.equals("")  || project.equals("")){
 			JOptionPane.showMessageDialog(null, "You must fill both fields before continuing.");								

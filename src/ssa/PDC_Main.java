@@ -26,8 +26,10 @@ public class PDC_Main{
 			System.out.println("No argument passed");
 		}
 		try {
+			Municipalities m = new Municipalities();
 			GUI g = new GUI();
-			g.initialize();
+			
+			g.initialize(m);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	 
