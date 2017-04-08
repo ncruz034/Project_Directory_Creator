@@ -3,6 +3,8 @@ package ssa;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 import javax.swing.SwingConstants;
@@ -21,7 +23,6 @@ public class GUI {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JComboBox<String> comboBox;
-
 
 	public void initialize() {
 		
@@ -86,8 +87,7 @@ public class GUI {
 		btnEnter.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {				
-				ImputChecker ic = new ImputChecker();				
-				ic.imputChecker(textField.getText(), textField_1.getText(),(String) comboBox.getSelectedItem());			
+				imputChecker(textField.getText(), textField_1.getText(),(String) comboBox.getSelectedItem());
 			}
 		});
 		
@@ -103,5 +103,22 @@ public class GUI {
 		btnExit.setBounds(120, 141, 67, 23);
 		frame.getContentPane().add(btnExit);
 		frame.setVisible(true);
+		
+		
+	}
+	
+	public void imputChecker(String section, String project, String municipality){
+		
+		if(section.equals("")  || project.equals("")){
+			JOptionPane.showMessageDialog(null, "You must fill both fields before continuing.");								
+	    }else{
+            if (section.matches("[0-9]+") && section.length() == 6){				
+				EventHandeler eh = new EventHandeler();
+				eh.btnEnter_Clicked(section, project, municipality);	
+				JOptionPane.showMessageDialog(null, "The directory was successfully created");
+			}else{
+				JOptionPane.showMessageDialog(null, "Section number must be six characters long.");
+			}
+	    }
 	}
 }

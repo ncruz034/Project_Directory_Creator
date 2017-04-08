@@ -14,10 +14,12 @@ public class DirectoryWriter {
 	private String section;
 	private String project;
 	private String projectPath;
+	private String municipality;
 	
-	public DirectoryWriter(String section, String project){
+	public DirectoryWriter(String section, String project, String municipality){
 		this.section = section;
 		this.project = project;
+		this.municipality = municipality;
 	}
 	
 	public String getDrive(){
@@ -57,5 +59,13 @@ public class DirectoryWriter {
 				"The project (" + project + ") already exists.");
 			}	
 			x.close();
-		}			
+			
+			
+			Shortcut sc = new Shortcut(this.projectPath);
+			sc.createDesktopShortcut(this.project);
+			sc.cleanShortCuts(section, project, municipality);
+			
+		}
+	
+
 }
