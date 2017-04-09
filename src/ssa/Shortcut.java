@@ -27,11 +27,12 @@ public class Shortcut {
 			link.setPath(filePath);
 			link.save();
 		} catch (Exception ex) {
-		ex.printStackTrace();
+			System.out.println("Error in creating short cut");
+		    //ex.printStackTrace();
 		}
 	}
 	 
-   // @SuppressWarnings("resource")
+    @SuppressWarnings("resource")
 	private  void copyFile(File sourceFile, File destFile) throws IOException {
         if(!destFile.exists()) {
             destFile.createNewFile();
@@ -56,19 +57,16 @@ public class Shortcut {
         }
     }
 
-    public void cleanShortCuts(String section, String project, String municipality){
-    	//String municipalityShortcutPath = "S:\\projects\\" + municipality;
-		File desktop =new File(JShellLink.getDirectory("desktop") + "\\" + project + ".lnk");
-		
-	    File sProjectsFile =new File("S:\\projects\\" + project + ".lnk");
-	    
+    public void moveShortCuts(String section, String project, String municipality) throws IOException{
+		File desktop =new File(JShellLink.getDirectory("desktop") + "\\" + project + ".lnk");		
+	    File sProjectsFile =new File("S:\\projects\\" + project + ".lnk");    
 	    File sProjectsMunicipalitiesFile =new File("S:\\projects\\" + municipality + 
-	    											           "\\" + project + ".lnk");
-				
+	    											           "\\" + project + ".lnk");			
 		try {
 			copyFile(desktop, sProjectsFile); 
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error in copying short cut to s projects");
+			//e.printStackTrace();
 		}		
 		
 		if(municipality.compareTo("Unknown") != 0){
@@ -76,20 +74,12 @@ public class Shortcut {
 				//Copy shortcut from desktop to s:/projects/municipality
 				randomDir=new File("S:\\projects\\" + municipality);
 				randomDir.mkdir();
-				copyFile(desktop,
-					   sProjectsMunicipalitiesFile);  
+				copyFile(desktop,sProjectsMunicipalitiesFile);  
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Error in copying short cut to s projects/municipalities");
+				//e.printStackTrace();
 			}
-		}
-		try {
-			deleteFile(desktop);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  		
+		}		
+		desktop.delete();		
     }
-    
-	private  void deleteFile(File sourceFile) throws IOException {	
-		sourceFile.delete();	
-	}  
 }

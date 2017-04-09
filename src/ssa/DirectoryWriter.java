@@ -1,6 +1,7 @@
 package ssa;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -21,15 +22,7 @@ public class DirectoryWriter {
 		this.project = project;
 		this.municipality = municipality;
 	}
-	
-	public String getDrive(){
-		return drive;
-	}
-	
-	public String getProjectPath(){
-		return projectPath;
-	}
-	
+
 	public void writeDirectoryStructure() {
 		try{				
 			x = new Scanner(new File("directories.txt"));				
@@ -40,34 +33,32 @@ public class DirectoryWriter {
 			
 		/*Stores the drive letter where the directory structure
 		  will be created.*/	
-		this.drive = x.next();
-		
-		this.projectPath = drive + "\\" + section + "\\" + project;
-		
-		randomDir = new File(drive + "\\" + section);
-		
-		randomDir.mkdir();
-		
+		this.drive = x.next();		
+		this.projectPath = drive + "\\" + section + "\\" + project;		
+		randomDir = new File(drive + "\\" + section);		
+		randomDir.mkdir();		
 		randomDir = new File(drive + "\\" + section+ "\\" + project);
-			if(!randomDir.exists()){
-				randomDir.mkdir();			
-				while (x.hasNext()){	
-					randomDir = new File(drive + "\\" + section + 
-							                     "\\" + project + x.next());
-					randomDir.mkdir();
-				}
-			}else{
-				JOptionPane.showMessageDialog(null, 
-				"The project (" + project + ") already exists.");
-			}	
-			x.close();
-			
-			
-			Shortcut sc = new Shortcut(this.projectPath);
-			sc.createDesktopShortcut(this.project);
-			sc.cleanShortCuts(section, project, municipality);
-			
-		}
-	
-
+		if(!randomDir.exists()){
+			randomDir.mkdir();			
+			while (x.hasNext()){	
+				randomDir = new File(drive + "\\" + section + 
+						                     "\\" + project + x.next());
+				randomDir.mkdir();
+			}
+			JOptionPane.showMessageDialog(null, "The Project's directory was successfully created");
+		}else{
+			JOptionPane.showMessageDialog(null, 
+			"The project (" + project + ") already exists.");
+		}	
+		x.close();
+		
+		Shortcut sc = new Shortcut(this.projectPath);
+		sc.createDesktopShortcut(this.project);
+		try {
+			sc.moveShortCuts(section, project, municipality);
+		} catch (IOException e) {
+			System.out.println("Error");
+			//e.printStackTrace();
+		}			
+	}
 }
