@@ -52,13 +52,15 @@ public class DirectoryWriter {
 		}	
 		x.close();
 		
-		Shortcut sc = new Shortcut(this.projectPath);
+		Shortcut2 sc = new Shortcut2(this.projectPath);
 		sc.createDesktopShortcut(this.project);
+		/*
 		try {
 			sc.moveShortCuts(section, project, municipality);
 		} catch (IOException e) {
 			System.out.println("Error");
 			//e.printStackTrace();
-		}			
+		}
+		*/			
 	}
 }

@@ -1,4 +1,5 @@
 package ssa;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,12 +8,12 @@ import java.nio.channels.FileChannel;
 
 import net.jimmc.jshortcut.JShellLink;
 
-public class Shortcut {
+public class Shortcut2 {
 	JShellLink link;
 	String filePath;
 	static File randomDir;
 		
-	public Shortcut(String projectPath) { 
+	public Shortcut2(String projectPath) { 
 		try {
 			link = new JShellLink();
 			filePath = JShellLink.getDirectory("") + projectPath; 
@@ -23,7 +24,7 @@ public class Shortcut {
 	public void createDesktopShortcut(String projectName) {
 		try {
 			
-			link.setFolder(JShellLink.getDirectory("desktop"));
+			link.setFolder("S:\\Projects");
 			link.setName(projectName);
 			link.setPath(filePath);
 			link.save();
@@ -31,6 +32,20 @@ public class Shortcut {
 			System.out.println("Error in creating short cut");
 		    //ex.printStackTrace();
 		}
+		
+		/*Check if the municipality folder exists, if not then create it before
+		 * creating the shortcut.
+		 */
+		try {			
+			link.setFolder("S:\\Projects\\" + "NELSON");
+			link.setName(projectName);
+			link.setPath(filePath);
+			link.save();
+		} catch (Exception ex) {
+			System.out.println("Error in creating short cut");
+		    //ex.printStackTrace();
+		}
+		
 	}
 	 
     @SuppressWarnings("resource")
