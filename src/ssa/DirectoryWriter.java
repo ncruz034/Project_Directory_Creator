@@ -1,7 +1,6 @@
 package ssa;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -38,6 +37,7 @@ public class DirectoryWriter {
 		randomDir = new File(drive + "\\" + section);		
 		randomDir.mkdir();		
 		randomDir = new File(drive + "\\" + section+ "\\" + project);
+		
 		if(!randomDir.exists()){
 			randomDir.mkdir();			
 			while (x.hasNext()){	
@@ -52,15 +52,8 @@ public class DirectoryWriter {
 		}	
 		x.close();
 		
-		Shortcut2 sc = new Shortcut2(this.projectPath);
-		sc.createDesktopShortcut(this.project);
-		/*
-		try {
-			sc.moveShortCuts(section, project, municipality);
-		} catch (IOException e) {
-			System.out.println("Error");
-			//e.printStackTrace();
-		}
-		*/			
+		Shortcut sc = new Shortcut(this.projectPath,this.project,this.municipality);
+		
+		sc.create();			
 	}
 }
